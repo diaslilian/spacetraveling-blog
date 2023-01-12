@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest --watchAll",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "slicemachine": "start-slicemachine"
   },
   "dependencies": {
     "@prismicio/client": "^6.4.3",
@@ -21,6 +22,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-icons": "^4.2.0",
+    "slice-machine-ui": "^0.6.0",
     "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
