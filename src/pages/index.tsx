@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -71,43 +72,49 @@ export default function Home({ postsPagination }: HomeProps) {
   }
 
   return (
-    <main className={commonStyles.container}>
-      <Header />
+    <>
+      <Head>
+        <title>Home | spacetraveling</title>
+      </Head>
 
-      <div className={styles.posts}>
-        {posts.map(post => (
-          <Link href={`/post/${post.uid}`}>
-            <a className={styles.post}>
-              <strong>{post.data.title}</strong>
-              <p>{post.data.subtitle}</p>
-              <ul>
-                <li>
-                  <FiCalendar />
-                  {post.first_publication_date}
-                </li>
-                <li>
-                  <FiUser />
-                  {post.data.author}
-                </li>
-              </ul>
-            </a>
-          </Link>
-        ))}
+      <main className={commonStyles.container}>
+        <Header />
 
-        {nextPage && (
-          <button type="button" onClick={handleNextPage}>
-            Carregar mais posts
-          </button>
-        )}
-      </div>
-    </main>
+        <div className={styles.posts}>
+          {posts.map(post => (
+            <Link key={post.uid} href={`/post/${post.uid}`}>
+              <a className={styles.post}>
+                <strong>{post.data.title}</strong>
+                <p>{post.data.subtitle}</p>
+                <ul>
+                  <li>
+                    <FiCalendar />
+                    {post.first_publication_date}
+                  </li>
+                  <li>
+                    <FiUser />
+                    {post.data.author}
+                  </li>
+                </ul>
+              </a>
+            </Link>
+          ))}
+
+          {nextPage && (
+            <button type="button" onClick={handleNextPage}>
+              Carregar mais posts
+            </button>
+          )}
+        </div>
+      </main>
+    </>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient({});
   const postsResponse = await prismic.getByType('posts', {
-    pageSize: 2,
+    pageSize: 3,
     orderings: {
       field: 'last_publication_date',
       direction: 'desc',
